@@ -54,11 +54,17 @@ public class ExerciseService {
     public ExerciseResponseDto updateExercise(String id, ExerciseDataDto dataDto) {
         Exercise exerciseToUpdate = verifyExerciseById(id);
 
-        // Atualiza os campos do exercício
         BeanUtils.copyProperties(dataDto, exerciseToUpdate);
         exerciseToUpdate.setUpdatedAt(LocalDateTime.now());
 
-        // Atualiza o exercício em todos os treinamentos
+        updateExerciseInTrainings(id, dataDto);
+
+        Exercise updatedExercise = exerciseRepository.save(exerciseToUpdate);
+
+        return serviceMap.exerciseMapToDTO(updatedExercise);
+    }
+
+    private void updateExerciseInTrainings(String id, ExerciseDataDto dataDto) {
         List<Training> trainings = trainingRepository.findAllByExercisesId(id);
         trainings.forEach(training -> {
             training.getExercises().stream()
@@ -72,13 +78,7 @@ public class ExerciseService {
             training.setUpdatedAt(LocalDateTime.now());
             trainingRepository.save(training);
         });
-
-        // Salva o exercício atualizado
-        Exercise updatedExercise = exerciseRepository.save(exerciseToUpdate);
-
-        return serviceMap.exerciseMapToDTO(updatedExercise);
     }
-
 
 
     public AllResponseDTO queryAllPageable(int pageNo, int pageSize) {
