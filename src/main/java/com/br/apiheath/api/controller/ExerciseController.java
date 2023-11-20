@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static br.com.collec.utils.Constants.DEFAULT_PAGE_NUMBER;
+import static br.com.collec.utils.Constants.DEFAULT_PAGE_SIZE;
+
 @RestController
 @RequestMapping("/exercise")
 public class ExerciseController {
@@ -22,8 +25,8 @@ public class ExerciseController {
     }
 
     @GetMapping
-    public ResponseEntity<AllResponseDTO> listAllExercise(@RequestParam( defaultValue = "0", required = false) int pageNo,
-                                                          @RequestParam( defaultValue = "5", required = false) int pageSize) {
+    public ResponseEntity<AllResponseDTO> listAllExercise(@RequestParam( defaultValue = DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+                                                          @RequestParam( defaultValue = DEFAULT_PAGE_SIZE, required = false) int pageSize) {
         return new ResponseEntity<>(exerciseService.queryAllPageable(pageNo, pageSize), HttpStatus.OK);
     }
 

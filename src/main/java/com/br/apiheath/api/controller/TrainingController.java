@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static br.com.collec.utils.Constants.DEFAULT_PAGE_NUMBER;
+import static br.com.collec.utils.Constants.DEFAULT_PAGE_SIZE;
+
 @RestController
 @RequestMapping("/training")
 public class TrainingController {
@@ -22,8 +25,8 @@ public class TrainingController {
     }
 
     @GetMapping
-    public ResponseEntity<AllResponseDTO> listAllExercise(@RequestParam( defaultValue = "0", required = false) int pageNo,
-                                                          @RequestParam( defaultValue = "5", required = false) int pageSize)
+    public ResponseEntity<AllResponseDTO> listAllExercise(@RequestParam( defaultValue = DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+                                                          @RequestParam( defaultValue = DEFAULT_PAGE_SIZE, required = false) int pageSize)
     {
         return new ResponseEntity<>(trainingService.trainingQueryAllPageable(pageNo, pageSize), HttpStatus.OK);
     }
