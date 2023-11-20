@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 @Service
 public class ExerciseService {
 
-
     @Autowired
     ExerciseRepository exerciseRepository;
 
@@ -31,6 +30,7 @@ public class ExerciseService {
 
     @Autowired
     ServiceMap serviceMap;
+
 
     public ExerciseResponseDto createExercise(ExerciseDataDto exercise){
 
